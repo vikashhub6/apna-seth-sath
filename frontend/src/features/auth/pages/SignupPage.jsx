@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../AuthContext';
+import { useAuth } from '../context/AuthContext';
 import { authService } from '../services/authService';
 
 export default function SignupPage() {
@@ -28,18 +28,12 @@ export default function SignupPage() {
   return (
     <div className="min-h-screen flex">
       <div className="hidden lg:flex flex-1 gradient-hero items-center justify-center p-12 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          {[...Array(6)].map((_, i) => (
-            <div key={i} className="absolute rounded-full border border-white/30"
-              style={{ width: `${(i+1)*120}px`, height: `${(i+1)*120}px`, top: '50%', left: '50%', transform: 'translate(-50%,-50%)' }} />
-          ))}
-        </div>
         <div className="relative text-center text-white max-w-md">
           <div className="w-20 h-20 bg-white/20 rounded-3xl flex items-center justify-center mx-auto mb-8 backdrop-blur-sm">
             <span className="text-4xl">🏥</span>
           </div>
           <h1 className="text-5xl font-bold mb-4">Join SehatSaathi</h1>
-          <p className="text-white/80 text-lg">Start your health journey today. Track, connect, and thrive with a community that cares.</p>
+          <p className="text-white/80 text-lg">Start your health journey today.</p>
           <div className="mt-10 space-y-3">
             {['Free doctor consultations', 'Government health schemes', 'Emergency support 24/7', 'Health social feed'].map(feat => (
               <div key={feat} className="flex items-center gap-3 bg-white/10 rounded-xl px-4 py-3 backdrop-blur-sm text-left">
@@ -50,7 +44,6 @@ export default function SignupPage() {
           </div>
         </div>
       </div>
-
       <div className="flex-1 flex items-center justify-center p-8 bg-white overflow-y-auto">
         <div className="w-full max-w-md animate-slide-up">
           <div className="mb-8">
@@ -61,11 +54,7 @@ export default function SignupPage() {
             <h2 className="text-3xl font-bold text-gray-900">Create account</h2>
             <p className="text-muted mt-2">Join thousands on their health journey</p>
           </div>
-
-          {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm mb-4">{error}</div>
-          )}
-
+          {error && <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-xl text-sm mb-4">{error}</div>}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1.5">Full Name</label>
@@ -87,12 +76,10 @@ export default function SignupPage() {
               <input className="input" type="password" placeholder="Min. 6 characters" value={form.password}
                 onChange={e => setForm({ ...form, password: e.target.value })} required minLength={6} />
             </div>
-            <button type="submit" disabled={loading}
-              className="btn-primary w-full py-3 text-base disabled:opacity-60 disabled:cursor-not-allowed">
+            <button type="submit" disabled={loading} className="btn-primary w-full py-3 text-base disabled:opacity-60">
               {loading ? 'Creating account...' : 'Create Account'}
             </button>
           </form>
-
           <p className="text-center text-sm text-muted mt-6">
             Already have an account?{' '}
             <Link to="/login" className="text-primary font-semibold hover:underline">Sign in</Link>

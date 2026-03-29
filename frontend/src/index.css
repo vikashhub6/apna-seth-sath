@@ -1,14 +1,12 @@
 
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
 @layer base {
   * { box-sizing: border-box; }
   body {
-    font-family: 'DM Sans', system-ui, sans-serif;
+    font-family: "DM Sans", system-ui, sans-serif;
     background-color: #F8F9FC;
     color: #1A1D27;
     -webkit-font-smoothing: antialiased;
@@ -19,63 +17,20 @@
 }
 
 @layer components {
-  .btn-primary {
-    @apply bg-primary text-white px-5 py-2.5 rounded-xl font-semibold text-sm hover:bg-primary-dark transition-all duration-200 shadow-sm hover:shadow-md active:scale-95;
-  }
-  .btn-outline {
-    @apply border border-primary text-primary px-5 py-2.5 rounded-xl font-semibold text-sm hover:bg-primary hover:text-white transition-all duration-200 active:scale-95;
-  }
-  .btn-ghost {
-    @apply text-muted px-4 py-2 rounded-xl font-medium text-sm hover:bg-border hover:text-gray-700 transition-all duration-200;
-  }
-  .card {
-    @apply bg-white rounded-2xl shadow-card border border-border/50 hover:shadow-card-hover transition-shadow duration-300;
-  }
-  .input {
-    @apply w-full border border-border rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all duration-200 bg-white;
-  }
-  .sidebar-link {
-    @apply flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-muted hover:bg-surface hover:text-gray-800 transition-all duration-200 cursor-pointer;
-  }
-  .sidebar-link.active {
-    @apply bg-primary/10 text-primary font-semibold;
-  }
-  .badge {
-    @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold;
-  }
-  .glass {
-    @apply backdrop-blur-md bg-white/70 border border-white/50;
-  }
-  .floating-btn {
-    @apply fixed bottom-8 right-8 w-14 h-14 rounded-full shadow-2xl flex items-center justify-center cursor-pointer transition-all duration-300 hover:scale-110;
-  }
+  .btn-primary { @apply bg-primary text-white px-5 py-2.5 rounded-xl font-semibold text-sm hover:bg-primary-dark transition-all duration-200 shadow-sm hover:shadow-md active:scale-95; }
+  .btn-outline { @apply border border-primary text-primary px-5 py-2.5 rounded-xl font-semibold text-sm hover:bg-primary hover:text-white transition-all duration-200 active:scale-95; }
+  .btn-ghost { @apply text-muted px-4 py-2 rounded-xl font-medium text-sm hover:bg-border hover:text-gray-700 transition-all duration-200; }
+  .card { @apply bg-white rounded-2xl shadow-card border border-border/50 hover:shadow-card-hover transition-shadow duration-300; }
+  .input { @apply w-full border border-border rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all duration-200 bg-white; }
+  .badge { @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold; }
 }
 
 @layer utilities {
-  .gradient-hero {
-    background: linear-gradient(135deg, #6C3CE1 0%, #4A2BA0 50%, #2D1B69 100%);
-  }
-  .gradient-accent {
-    background: linear-gradient(135deg, #00C896 0%, #00A87A 100%);
-  }
-  .text-gradient {
-    background: linear-gradient(135deg, #6C3CE1, #00C896);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .animate-fade-in {
-    animation: fadeIn 0.4s ease-out;
-  }
-  .animate-slide-up {
-    animation: slideUp 0.4s ease-out;
-  }
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  @keyframes slideUp {
-    from { opacity: 0; transform: translateY(16px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+  .gradient-hero { background: linear-gradient(135deg, #6C3CE1 0%, #4A2BA0 50%, #2D1B69 100%); }
+  .gradient-accent { background: linear-gradient(135deg, #00C896 0%, #00A87A 100%); }
+  .text-gradient { background: linear-gradient(135deg, #6C3CE1, #00C896); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .animate-fade-in { animation: fadeIn 0.4s ease-out; }
+  .animate-slide-up { animation: slideUp 0.4s ease-out; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 }
