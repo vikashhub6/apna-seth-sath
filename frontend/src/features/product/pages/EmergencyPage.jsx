@@ -1,3 +1,4 @@
+import 'leaflet/dist/leaflet.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { MapContainer, TileLayer, Marker, Popup, Circle } from 'react-leaflet';
