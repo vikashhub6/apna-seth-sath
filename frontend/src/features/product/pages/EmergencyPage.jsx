@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-
+axios.defaults.baseURL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 export default function EmergencyPage() {
   const [hospitals, setHospitals] = useState([]);
   const [loading, setLoading] = useState(true);

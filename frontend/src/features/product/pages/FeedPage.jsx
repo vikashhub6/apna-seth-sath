@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../auth/AuthContext';
 import { postService } from '../../product/services/postService';
+import axios from "axios";
+axios.defaults.baseURL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 function PostCard({ post, currentUser, onLike, onComment, onDelete }) {
   const [showComment, setShowComment] = useState(false);
