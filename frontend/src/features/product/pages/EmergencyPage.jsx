@@ -1,13 +1,41 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { MapContainer, TileLayer, Marker, Popup, Circle } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
 axios.defaults.baseURL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
+// Fix leaflet default marker icon
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
+  iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
+});
+
+const hospitalIcon = new L.Icon({
+  iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+});
+
 export default function EmergencyPage() {
   const [hospitals, setHospitals] = useState([]);
   const [loading, setLoading] = useState(true);
   const [called, setCalled] = useState(false);
+  const [userLocation, setUserLocation] = useState([28.6139, 77.2090]); // Default: Delhi
 
   useEffect(() => {
     axios.get('/api/emergency').then(r => setHospitals(r.data.data)).catch(() => {}).finally(() => setLoading(false));
+
+    // Get user's real location
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => setUserLocation([pos.coords.latitude, pos.coords.longitude]),
+        () => {} // fallback to Delhi
+      );
+    }
   }, []);
 
   const handleEmergencyCall = () => {
@@ -53,35 +81,40 @@ export default function EmergencyPage() {
         </div>
       </div>
 
-      {/* Map Placeholder + Hospitals */}
+      {/* Map + Hospitals */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Map */}
+        {/* Real Map */}
         <div className="card overflow-hidden">
-          <div className="bg-[#1a2035] h-72 flex items-center justify-center relative">
-            <div className="absolute inset-0 opacity-40" style={{
-              backgroundImage: `repeating-linear-gradient(0deg, rgba(108,60,225,0.15) 0px, transparent 1px, transparent 40px),
-                repeating-linear-gradient(90deg, rgba(108,60,225,0.15) 0px, transparent 1px, transparent 40px)`
-            }}></div>
-            {/* Simulated map markers */}
-            <div className="relative w-full h-full">
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                <div className="w-8 h-8 bg-primary rounded-xl flex items-center justify-center text-white shadow-lg">+</div>
-                <p className="text-white text-xs text-center mt-1 font-medium">Central Clinic</p>
-              </div>
-              <div className="absolute top-1/4 right-1/4">
-                <div className="w-6 h-6 bg-accent rounded-lg flex items-center justify-center text-white text-xs shadow-lg">🏥</div>
-              </div>
-              <div className="absolute bottom-1/4 left-1/4">
-                <div className="w-6 h-6 bg-red-500 rounded-lg flex items-center justify-center text-white text-xs shadow-lg">🏥</div>
-              </div>
-            </div>
-            <div className="absolute bottom-4 left-4 bg-white/10 backdrop-blur-sm rounded-xl px-3 py-2 text-white text-sm border border-white/20">
-              📍 Current Location: Central District
-            </div>
+          <div style={{ height: '350px', zIndex: 1 }}>
+            <MapContainer center={userLocation} zoom={13} style={{ height: '100%', width: '100%' }}>
+              <TileLayer
+                attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              />
+              {/* User location */}
+              <Circle center={userLocation} radius={300} color="blue" fillColor="blue" fillOpacity={0.2}>
+                <Popup>📍 Your Location</Popup>
+              </Circle>
+              {/* Hospital markers */}
+              {hospitals.map((h, i) => {
+                const offset = (i + 1) * 0.005;
+                const pos = [userLocation[0] + offset, userLocation[1] + offset];
+                return (
+                  <Marker key={h._id} position={pos} icon={hospitalIcon}>
+                    <Popup>
+                      <strong>{h.name}</strong><br />
+                      {h.type}<br />
+                      📍 {h.distance}<br />
+                      ⏱ {h.wait} wait
+                    </Popup>
+                  </Marker>
+                );
+              })}
+            </MapContainer>
           </div>
           <div className="p-4">
-            <h3 className="font-bold text-gray-900 mb-1">Area Map</h3>
-            <p className="text-muted text-sm">Showing nearby hospitals and care centers</p>
+            <h3 className="font-bold text-gray-900 mb-1">📍 Live Area Map</h3>
+            <p className="text-muted text-sm">Showing your location and nearby hospitals</p>
           </div>
         </div>
 
