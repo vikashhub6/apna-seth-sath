@@ -1,0 +1,187 @@
+{
+  "info": {
+    "name": "SehatSaathi API Collection",
+    "description": "Complete API collection with Login and Chat endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1️⃣ LOGIN - Get Token",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"test@example.com\",\n  \"password\": \"password123\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5001/api/users/login",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5001",
+          "path": ["api", "users", "login"]
+        },
+        "description": "Login to get JWT token. Copy the token from response and paste in next request."
+      },
+      "response": []
+    },
+    {
+      "name": "2️⃣ CHAT - Pet Dard (Stomach Pain)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer YOUR_TOKEN_HERE",
+            "description": "Paste your token here from Login response"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Mujhe pet dard ho raha hai, thoda loose motion bhi hai, kya karun?\"\n    }\n  ]\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5001/api/aibot/chat",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5001",
+          "path": ["api", "aibot", "chat"]
+        },
+        "description": "Chat with AI. Update Authorization header with token from Login request first."
+      },
+      "response": []
+    },
+    {
+      "name": "3️⃣ CHAT - Bukhar (Fever)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer YOUR_TOKEN_HERE",
+            "description": "Paste your token here from Login response"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Mujhe bukhar hai, temperature 101 hai, kya karun?\"\n    }\n  ]\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5001/api/aibot/chat",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5001",
+          "path": ["api", "aibot", "chat"]
+        },
+        "description": "Test fever symptoms query"
+      },
+      "response": []
+    },
+    {
+      "name": "4️⃣ CHAT - Headache",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          },
+          {
+            "key": "Authorization",
+            "value": "Bearer YOUR_TOKEN_HERE",
+            "description": "Paste your token here from Login response"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": \"Mujhe sir dard ho raha hai ghantey se, aur main thak gaya hun. Kya khoob isse bachne ka tareeka?\"\n    }\n  ]\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5001/api/aibot/chat",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5001",
+          "path": ["api", "aibot", "chat"]
+        },
+        "description": "Test headache symptoms query"
+      },
+      "response": []
+    },
+    {
+      "name": "5️⃣ SIGNUP - Create New User",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Aditya Kumar\",\n  \"email\": \"aditya@example.com\",\n  \"password\": \"password123\",\n  \"phone\": \"9876543210\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:5001/api/users/signup",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5001",
+          "path": ["api", "users", "signup"]
+        },
+        "description": "Create a new user account"
+      },
+      "response": []
+    },
+    {
+      "name": "6️⃣ GET PROFILE - Get User Info",
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer YOUR_TOKEN_HERE",
+            "description": "Paste your token here from Login response"
+          }
+        ],
+        "url": {
+          "raw": "http://localhost:5001/api/users/profile",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5001",
+          "path": ["api", "users", "profile"]
+        },
+        "description": "Get current logged in user's profile"
+      },
+      "response": []
+    },
+    {
+      "name": "7️⃣ HEALTH CHECK",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:5001/api/health",
+          "protocol": "http",
+          "host": ["localhost"],
+          "port": "5001",
+          "path": ["api", "health"]
+        },
+        "description": "Check if server is running"
+      },
+      "response": []
+    }
+  ]
+}

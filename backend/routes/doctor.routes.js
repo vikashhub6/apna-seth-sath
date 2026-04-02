@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { protect } = require('../middleware/auth.middleware');
+const { protect } = require('../middlewares/auth.middleware');
 
 const doctors = [
   { _id: '1', name: 'Dr. Julian Thorne', specialization: 'Neurology Expert', rating: 4.9, experience: 15, available: true, image: '', fee: 800, about: 'Leading neurologist with expertise in cognitive disorders.' },

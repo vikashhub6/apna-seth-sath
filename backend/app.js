@@ -5,8 +5,6 @@ require('dotenv').config();
 const app = express();
 
 // Middleware
-
-
 app.use(cors({ 
   origin: ['http://localhost:5173', 'https://apna-seth-sath.vercel.app'], 
   credentials: true 
@@ -20,6 +18,7 @@ app.use('/api/posts', require('./routes/post.routes'));
 app.use('/api/doctors', require('./routes/doctor.routes'));
 app.use('/api/schemes', require('./routes/scheme.routes'));
 app.use('/api/emergency', require('./routes/emergency.routes'));
+app.use('/api/aibot', require('./routes/chat.routes')); 
 
 // Health check
 app.get('/api/health', (req, res) => {
