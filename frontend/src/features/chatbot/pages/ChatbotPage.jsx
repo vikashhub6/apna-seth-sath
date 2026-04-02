@@ -7,7 +7,7 @@ import SuggestedPrompts from "../components/SuggestedPrompts";
 import ErrorBanner from "../components/ErrorBanner";
 
 export default function ChatbotPage() {
-  const { messages, typing, error, sendMessage, clearChat } = useChat();
+  const { messages, typing, error, sendMessage, clearChat, setCurrentImage, setCurrentImageType } = useChat();
   const [input, setInput] = useState("");
   const bottomRef = useRef(null);
 
@@ -20,6 +20,11 @@ export default function ChatbotPage() {
     if (!msg) return;
     setInput("");
     sendMessage(msg);
+  };
+
+  const handleImageSelect = (imageData, imageType) => {
+    setCurrentImage(imageData);
+    setCurrentImageType(imageType);
   };
 
   const formatTime = (date) =>
@@ -39,6 +44,7 @@ export default function ChatbotPage() {
         input={input}
         onInputChange={setInput}
         onSend={() => handleSend()}
+        onImageSelect={handleImageSelect}
       />
       <SuggestedPrompts onSelect={handleSend} />
     </div>

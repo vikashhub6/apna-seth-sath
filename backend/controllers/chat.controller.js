@@ -2,8 +2,8 @@ const { generateChatResponse } = require("../services/ai.service");
 
 async function chatController(req, res) {
   try {
-    let { messages } = req.body;
-    const file = req.file?.path || null; // ✅ multer yahan dalta hai URL
+    let { messages, fileUrl, fileType } = req.body;
+    const file = req.file?.path || null;
 
     // Parse messages if it's a string (from form-data)
     if (typeof messages === "string") {
@@ -17,19 +17,12 @@ async function chatController(req, res) {
       });
     }
 
-    let fileType = null;
-
-    if (file) {
-      if (/\.(jpg|jpeg|png|webp)$/i.test(file)) {
-        fileType = "image";
-      } else if (/\.pdf$/i.test(file)) {
-        fileType = "pdf";
-      }
-    }
+    // Use fileUrl from body (base64) or file from multer
+    const imageUrl = fileUrl || file;
 
     const reply = await generateChatResponse({
       messages,
-      fileUrl: file,
+      fileUrl: imageUrl,
       fileType,
     });
 

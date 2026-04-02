@@ -9,27 +9,30 @@ export function useChat() {
     {
       id: 1,
       role: "bot",
-      text: "Hi! I'm Sehat AI, your personal health assistant. 🏥\n\nI can help with symptoms, health tips, and doctor suggestions. How can I help you today?",
+      text: "Hi! I'm Sehat AI, your personal health assistant. 🏥\n\nI can help with symptoms, health tips, doctor suggestions, and even analyze images. How can I help you today?",
       time: new Date(),
     },
   ]);
   const [typing, setTyping] = useState(false);
   const [error, setError] = useState(null);
+  const [currentImage, setCurrentImage] = useState(null);
+  const [currentImageType, setCurrentImageType] = useState(null);
 
   const sendMessage = useCallback(
-    async (text, fileUrl = null, fileType = null) => {
+    async (text) => {
       if (!token) {
         setError("Please login first to use chat");
         return;
       }
 
       const userMsg = text?.trim();
-      if (!userMsg) return;
+      if (!userMsg && !currentImage) return;
 
       const newUserMessage = {
         id: Date.now(),
         role: "user",
         text: userMsg,
+        image: currentImage,
         time: new Date(),
       };
 
@@ -47,8 +50,8 @@ export function useChat() {
         const data = await chatService.sendMessage(
           apiMessages,
           token,
-          fileUrl,
-          fileType
+          currentImage,
+          currentImageType
         );
 
         setMessages((prev) => [
@@ -60,6 +63,10 @@ export function useChat() {
             time: new Date(),
           },
         ]);
+
+        // Clear image after sending
+        setCurrentImage(null);
+        setCurrentImageType(null);
       } catch (err) {
         setError(err.message);
         setMessages((prev) => [
@@ -75,7 +82,7 @@ export function useChat() {
         setTyping(false);
       }
     },
-    [messages, token]
+    [messages, token, currentImage, currentImageType]
   );
 
   const clearChat = useCallback(() => {
@@ -90,5 +97,13 @@ export function useChat() {
     setError(null);
   }, []);
 
-  return { messages, typing, error, sendMessage, clearChat };
+  return {
+    messages,
+    typing,
+    error,
+    sendMessage,
+    clearChat,
+    setCurrentImage,
+    setCurrentImageType,
+  };
 }

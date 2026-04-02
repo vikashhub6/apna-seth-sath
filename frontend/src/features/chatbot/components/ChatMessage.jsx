@@ -9,6 +9,13 @@ export default function ChatMessage({ msg, formatTime }) {
         </div>
       )}
       <div className={`max-w-[80%] ${msg.role === "user" ? "order-1" : ""}`}>
+        {msg.image && (
+          <img
+            src={msg.image}
+            alt="Uploaded"
+            className="max-w-[200px] rounded-2xl mb-2"
+          />
+        )}
         <div
           className={`px-4 py-3 rounded-2xl text-sm leading-relaxed whitespace-pre-wrap ${
             msg.role === "user"

@@ -30,7 +30,26 @@ async function generateChatResponse({ messages, fileUrl, fileType }) {
 
   const lastMessage = messages[messages.length - 1];
 
-  if (fileUrl && fileType === "pdf") {
+  if (fileUrl && fileType === "image") {
+    // Handle base64 images
+    const imageData = fileUrl.includes("data:image") ? fileUrl : `data:image/jpeg;base64,${fileUrl}`;
+    
+    formattedMessages.push({
+      role: "user",
+      content: [
+        {
+          type: "text",
+          text: `User ne yeh image share ki hai. Image analyze karo aur fir user ka sawaal jawab de:\n\n${lastMessage.content}`
+        },
+        {
+          type: "image_url",
+          image_url: {
+            url: imageData
+          }
+        }
+      ]
+    });
+  } else if (fileUrl && fileType === "pdf") {
     const extractedText = await extractPdfText(fileUrl);
     formattedMessages.push({
       role: "user",
