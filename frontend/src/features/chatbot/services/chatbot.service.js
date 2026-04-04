@@ -1,8 +1,8 @@
-const BASE_URL = `${import.meta.env.VITE_API_URL || "http://localhost:5001"}/api/aibot`;
+const BASE_URL = `${import.meta.env.VITE_API_URL || "http://localhost:5001"}`;
 
 export const chatService = {
   sendMessage: async (messages, token, fileUrl = null, fileType = null) => {
-    const response = await fetch(`${BASE_URL}/aibot/chat`, {
+    const response = await fetch(`${BASE_URL}/api/aibot/chat`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
