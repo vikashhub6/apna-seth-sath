@@ -6,7 +6,7 @@ const app = express();
 
 // Middleware
 app.use(cors({ 
-  origin: ['http://localhost:5173', 'https://apna-seth-sath.vercel.app'], 
+  origin: ['http://localhost:5173', 'http://localhost:5174', 'https://apna-seth-sath.vercel.app'], 
   credentials: true 
 }));
 app.use(express.json({ limit: '10mb' }));

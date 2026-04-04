@@ -5,7 +5,7 @@ const api = axios.create({
   withCredentials: true,
 });
 
-const API = '/api/users';
+const API = '/users';
 
 export const authService = {
   signup: (data) => api.post(`${API}/signup`, data),
