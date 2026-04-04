@@ -1,4 +1,5 @@
-const BASE_URL = "http://localhost:5001/api";
+
+const BASE_URL = import.meta.env.VITE_API_URL || "http://localhost:5001/api";
 
 export const chatService = {
   sendMessage: async (messages, token, fileUrl = null, fileType = null) => {
